@@ -5,7 +5,12 @@ import posts from './routes/posts.js';
 import logger from "./middleware/logger.js";
 import errorHandler from "./middleware/error.js";
 import notFound from "./middleware/notFound.js";
+import mongoose from "mongoose";
+import connectDB from "./config/db.js";
 const port = process.env.PORT || 8000;
+
+// Connect to MongoDB
+connectDB();
 
 // Get the directory name of the current module
 const __filename = fileURLToPath(import.meta.url);
@@ -30,4 +35,7 @@ app.use('/api/posts', posts);
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB');
+    app.listen(port, () => console.log(`Server running on port ${port}`));
+});
