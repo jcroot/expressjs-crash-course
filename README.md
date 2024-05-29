@@ -8,6 +8,7 @@
 - Express Router
 - Static Files
 - Middleware
+- MongoDB & Mongoose
 
 ## Quick Start
 
